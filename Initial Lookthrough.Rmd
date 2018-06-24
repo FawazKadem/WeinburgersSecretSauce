@@ -1,0 +1,33 @@
+---
+title: "Initial Lookthrough"
+author: "Lotan Weininger"
+date: "June 24, 2018"
+output: html_document
+---
+
+#Read data in
+```{r}
+rawCookingData <- read.csv("rawCookingData.csv",header = TRUE)
+head(rawCookingData)
+```
+
+#Count the amount of times each ingredient appears
+```{r}
+library(plyr)
+library(dplyr)
+```
+
+```{r}
+countIngredients <- plyr::count(rawCookingData, "Ingredients")
+dfCountIngredients <- data.frame(countIngredients)
+dfCountIngredients$percentUsed <- NA
+dfCountIngredients %>%
+  mutate(percentUsed = freq / sum(freq))
+```
+
+#subset to find any ingredients that appear in over 100 dishes
+```{r}
+list1Percent <- dfCountIngredients[which(dfCountIngredients$freq >=100),]
+list1Percent
+```
+
