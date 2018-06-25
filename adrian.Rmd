@@ -33,7 +33,11 @@ Messing around with BRRR
 
 Import JSON data to a datatable
 ```{r}
+<<<<<<< HEAD
 data <- fromJSON("data/train.json")
+=======
+data <- fromJSON("train.json")
+>>>>>>> f1a0f5cf09d91d6d26c88d4edd1818b607c25ef4
 head(data)
 ```
 
