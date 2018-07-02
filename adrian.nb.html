@@ -173,54 +173,26 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>Install packages</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luc3RhbGwucGFja2FnZXMoXCJ0aWR5dmVyc2VcIilcbiNpbnN0YWxsLnBhY2thZ2VzKFwianNvbmxpdGVcIilcbiNpbnN0YWxsLnBhY2thZ2VzKFwiZGV2dG9vbHNcIilcbiNkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoXCJicm9va2Utd2F0c29uL0JSUlJcIilcbmBgYCJ9 -->
-<pre class="r"><code>#install.packages(&quot;tidyverse&quot;)
-#install.packages(&quot;jsonlite&quot;)
-#install.packages(&quot;devtools&quot;)
-#devtools::install_github(&quot;brooke-watson/BRRR&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
+<p>%% BASE DATA WRANGLING</p>
 <p>Load libraries</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGpzb25saXRlKVxubGlicmFyeShCUlJSKVxubGlicmFyeSh0aWR5cilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGpzb25saXRlKVxuYGBgIn0= -->
 <pre class="r"><code>library(tidyverse)
-library(jsonlite)
-library(BRRR)
-library(tidyr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Messing around with BRRR</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3NrcnJyYWhoKClcbiNkZWZhdWx0U291bmRzIDwtIGxpc3QoMTo1MilcbiNjdXN0b21Tb3VuZHMgPC0gbGlzdChcImh0dHA6Ly93d3cubWlnb3Nzb3VuZGJvYXJkLmNvbS9hdWRpby90YWtlb2ZmUG93UG93LndhdlwiLCBcImh0dHA6Ly93d3cubWlnb3Nzb3VuZGJvYXJkLmNvbS9hdWRpby9xdWF2b1JhaHcud2F2XCIsIFwiaHR0cDovL3d3dy5taWdvc3NvdW5kYm9hcmQuY29tL2F1ZGlvL3Rha2VvZmZDaGlycC53YXZcIilcbiNzb3VuZHMgPC0gbGlzdChkZWZhdWx0U291bmRzLCBjdXN0b21Tb3VuZHMpXG4jc2tycnJhaGgoc2FtcGxlKHNvdW5kcywxKSlcbmBgYCJ9 -->
-<pre class="r"><code>#skrrrahh()
-#defaultSounds &lt;- list(1:52)
-#customSounds &lt;- list(&quot;http://www.migossoundboard.com/audio/takeoffPowPow.wav&quot;, &quot;http://www.migossoundboard.com/audio/quavoRahw.wav&quot;, &quot;http://www.migossoundboard.com/audio/takeoffChirp.wav&quot;)
-#sounds &lt;- list(defaultSounds, customSounds)
-#skrrrahh(sample(sounds,1))</code></pre>
+library(jsonlite)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Import JSON data to a datatable</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuPDw8PDw8PCBIRUFEXG5kYXRhIDwtIGZyb21KU09OKFwiZGF0YS90cmFpbi5qc29uXCIpXG49PT09PT09XG5kYXRhIDwtIGZyb21KU09OKFwidHJhaW4uanNvblwiKVxuPj4+Pj4+PiBmMWEwZjVjZjA5ZDkxZDZkMjZjODhkNGVkZDE4MThiNjA3YzI1ZWY0XG5oZWFkKGRhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-data &lt;- fromJSON(&quot;data/train.json&quot;)
-=======
-data &lt;- fromJSON(&quot;train.json&quot;)
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; f1a0f5cf09d91d6d26c88d4edd1818b607c25ef4
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YSA8LSBmcm9tSlNPTihcInRyYWluLmpzb25cIilcbmhlYWQoZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>data &lt;- fromJSON(&quot;train.json&quot;)
 head(data)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Split ingredients column into seperate rows with duplicated id and cuisine values (make data long)</p>
+<p>Create LONG version of the data (split ingredients column into seperate rows with duplicated id and cuisine values)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3VzaW5nIHRoZSB1bm5lc3QgZnVuY3Rpb24gZnJvbSB0aWR5ciBkb2VzIHRoaXMgdmVyeSB3ZWxsXG5kYXRhTG9uZyA8LSB1bm5lc3QoZGF0YSwgaW5ncmVkaWVudHMpXG5oZWFkKGRhdGFMb25nKVxuYGBgIn0= -->
@@ -230,7 +202,7 @@ head(dataLong)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Spread ingredients across columns to make dummy variables (make data wide)</p>
+<p>Create WIDE version of data (spread ingredients across columns to make dummy variables)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YVRpZHkgPC0gZGF0YUxvbmcgJT4lXG4gIG11dGF0ZSh5ZXNubyA9IDEpICU+JVxuICBkaXN0aW5jdCAlPiVcbiAgc3ByZWFkKGluZ3JlZGllbnRzLCB5ZXNubywgZmlsbCA9IDApXG5cbmhlYWQoZGF0YVRpZHkpXG5gYGAifQ== -->
@@ -243,15 +215,171 @@ head(dataTidy)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Begin to inspect the data</p>
+<p>%% EXPLORING VARIABLES</p>
+<p>Explore instances of each cuisine type</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGV2ZWxzKGFzLmZhY3RvcihkYXRhVGlkeSRjdWlzaW5lKSlcbmBgYCJ9 -->
-<pre class="r"><code>levels(as.factor(dataTidy$cuisine))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3Vpc2luZUNvdW50cyA8LSBkYXRhVGlkeSAlPiVcbiAgZ3JvdXBfYnkoY3Vpc2luZSkgJT4lXG4gIHRhbGx5XG5gYGAifQ== -->
+<pre class="r"><code>cuisineCounts &lt;- dataTidy %&gt;%
+  group_by(cuisine) %&gt;%
+  tally</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Exploring text clustering</p>
+<p>Remove ingredients with less than X occurances</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5ncmVkaWVudENvdW50cyA8LSBkYXRhTG9uZyAlPiUgXG4gIGdyb3VwX2J5KGluZ3JlZGllbnRzKSAlPiVcbiAgdGFsbHlcblxuI2dldCBpbmdyZWRpZW50cyA+IDEwIGZyZXF1ZW5jeVxuZnJlcXVlbnRfaW5nIDwtIGluZ3JlZGllbnRDb3VudHMgJT4lIFxuICBmaWx0ZXIobiA+PSAyKSAlPiVcbiAgc2VsZWN0KGluZ3JlZGllbnRzKVxuXG4jZmlsdGVyIG91dFxuZGF0YUxvbmdGaWx0ZXJlZCA8LSBkYXRhTG9uZyAlPiUgXG4gIGZpbHRlcihpbmdyZWRpZW50cyAlaW4lIGZyZXF1ZW50X2luZyRpbmdyZWRpZW50cylcbmBgYCJ9 -->
+<pre class="r"><code>ingredientCounts &lt;- dataLong %&gt;% 
+  group_by(ingredients) %&gt;%
+  tally
+
+#get ingredients &gt; 10 frequency
+frequent_ing &lt;- ingredientCounts %&gt;% 
+  filter(n &gt;= 2) %&gt;%
+  select(ingredients)
+
+#filter out
+dataLongFiltered &lt;- dataLong %&gt;% 
+  filter(ingredients %in% frequent_ing$ingredients)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>RE-Spread ingredients across columns to make dummy variables (make data wide)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YVRpZHlGaWx0ZXJlZCA8LSBkYXRhTG9uZ0ZpbHRlcmVkICU+JVxuICBtdXRhdGUoeWVzbm8gPSAxKSAlPiVcbiAgZGlzdGluY3QgJT4lXG4gIHNwcmVhZChpbmdyZWRpZW50cywgeWVzbm8sIGZpbGwgPSAwKVxuXG5oZWFkKGRhdGFUaWR5RmlsdGVyZWQpXG5gYGAifQ== -->
+<pre class="r"><code>dataTidyFiltered &lt;- dataLongFiltered %&gt;%
+  mutate(yesno = 1) %&gt;%
+  distinct %&gt;%
+  spread(ingredients, yesno, fill = 0)
+
+head(dataTidyFiltered)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>% PREPARE DATA FOR MODELING</p>
+<p>Create dataset for decision tree</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2NvcHkgZGF0YXNldFxuZGF0YVRyZWUgPC0gZGF0YVRpZHlGaWx0ZXJlZFxuI3JlbW92ZSB1c2VsZXNzIElEIGNvbHVtblxuZGF0YVRyZWUkaWQgPC0gTlVMTFxuI3Rha2UgYSBzbWFsbGVyIHNhbXBsZSBvZiBvYnNlcnZhdGlvbnMgLSAyMCVcbmRhdGFUcmVlIDwtIGRhdGFUcmVlICU+JSBzYW1wbGVfZnJhYygwLjEpXG4jcHJldmlldyB0aGUgZGF0YVxuaGVhZChkYXRhVHJlZSlcbmBgYCJ9 -->
+<pre class="r"><code>#copy dataset
+dataTree &lt;- dataTidyFiltered
+#remove useless ID column
+dataTree$id &lt;- NULL
+#take a smaller sample of observations - 20%
+dataTree &lt;- dataTree %&gt;% sample_frac(0.1)
+#preview the data
+head(dataTree)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Create testing and training sets from data</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtX3NhbXBsZXMgPSBkaW0oZGF0YVRyZWUpWzFdXG5zYW1wbGluZy5yYXRlID0gMC44XG50cmFpbmluZyA8LSBzYW1wbGUoMTpudW1fc2FtcGxlcywgc2FtcGxpbmcucmF0ZSAqIG51bV9zYW1wbGVzLCByZXBsYWNlPUZBTFNFKSBcbnRyYWluaW5nU2V0IDwtIHN1YnNldChkYXRhVHJlZVt0cmFpbmluZywgXSlcbnRlc3RpbmcgPC0gc2V0ZGlmZigxOm51bV9zYW1wbGVzLHRyYWluaW5nKVxudGVzdGluZ1NldCA8LSBzdWJzZXQoZGF0YVRyZWVbdGVzdGluZywgXSlcbmBgYCJ9 -->
+<pre class="r"><code>num_samples = dim(dataTree)[1]
+sampling.rate = 0.8
+training &lt;- sample(1:num_samples, sampling.rate * num_samples, replace=FALSE) 
+trainingSet &lt;- subset(dataTree[training, ])
+testing &lt;- setdiff(1:num_samples,training)
+testingSet &lt;- subset(dataTree[testing, ])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>%% KNN MODEL</p>
+<p>Strip labels from the data</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBHZXQgdGhlIGZlYXR1cmVzIG9mIHRoZSB0cmFpbmluZyBzZXRcbnRyYWluaW5nZmVhdHVyZXMgPC0gc3Vic2V0KHRyYWluaW5nU2V0LCBzZWxlY3Q9YygtY3Vpc2luZSkpXG4jIEdldCB0aGUgbGFiZWxzIG9mIHRoZSB0cmFpbmluZyBzZXRcbnRyYWluaW5nbGFiZWxzIDwtIHRyYWluaW5nU2V0JGN1aXNpbmVcbiMgR2V0IHRoZSBmZWF0dXJlcyBvZiB0aGUgdGVzdGluZyBzZXRcbnRlc3RpbmdmZWF0dXJlcyA8LSBzdWJzZXQodGVzdGluZ1NldCwgc2VsZWN0PWMoLWN1aXNpbmUpKVxuYGBgIn0= -->
+<pre class="r"><code># Get the features of the training set
+trainingfeatures &lt;- subset(trainingSet, select=c(-cuisine))
+# Get the labels of the training set
+traininglabels &lt;- trainingSet$cuisine
+# Get the features of the testing set
+testingfeatures &lt;- subset(testingSet, select=c(-cuisine))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Create model and predict</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIHRoZSBjbGFzc2lmaWNhdGlvbiBsaWJyYXJ5XG5saWJyYXJ5KGNsYXNzKVxuIyBjYWxsIEtOTiB3aXRoIGs9M1xucHJlZGljdGVkTGFiZWxzID0ga25uKHRyYWluaW5nZmVhdHVyZXMsdGVzdGluZ2ZlYXR1cmVzLHRyYWluaW5nbGFiZWxzLGs9MylcblxuIyBHZXQgdGhlIG51bWJlciBvZiBkYXRhIHBvaW50cyBpbiB0aGUgdGVzdCBzZXRcbnNpemVUZXN0U2V0ID0gZGltKHRlc3RpbmdTZXQpWzFdXG4jIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIHRoYXQgYXJlIG1pc2NsYXNzaWZpZWRcbmVycm9yID0gc3VtKHByZWRpY3RlZExhYmVscyAhPSB0ZXN0aW5nU2V0JGN1aXNpbmUpXG4jIENhbGN1bGF0ZSB0aGUgbWlzY2xhc3NpZmljYXRpb24gcmF0ZVxubWlzY2xhc3NpZmljYXRpb25fcmF0ZSA9IGVycm9yL3NpemVUZXN0U2V0XG4jIERpc3BsYXkgdGhlIG1pc2NsYXNzaWZpY2F0aW9uIHJhdGVcbnByaW50KG1pc2NsYXNzaWZpY2F0aW9uX3JhdGUpXG5gYGAifQ== -->
+<pre class="r"><code># Load the classification library
+library(class)
+# call KNN with k=3
+predictedLabels = knn(trainingfeatures,testingfeatures,traininglabels,k=3)
+
+# Get the number of data points in the test set
+sizeTestSet = dim(testingSet)[1]
+# Get the number of data points that are misclassified
+error = sum(predictedLabels != testingSet$cuisine)
+# Calculate the misclassification rate
+misclassification_rate = error/sizeTestSet
+# Display the misclassification rate
+print(misclassification_rate)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>%% DECISION TREE MODEL</p>
+<p>Load library</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShycGFydClcbmBgYCJ9 -->
+<pre class="r"><code>library(rpart)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Create decision tree model and preview</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVjVHJlZU1vZGVsIDwtIHJwYXJ0KGN1aXNpbmUgfiAuLGRhdGE9dHJhaW5pbmdTZXQsIG1ldGhvZCA9IFwiY2xhc3NcIilcblxuI0Rpc3BsYXkgdGhlIHRyZWVcbnBsb3QoZGVjVHJlZU1vZGVsLCBtYXJnaW49MC4xKVxudGV4dChkZWNUcmVlTW9kZWwpXG5gYGAifQ== -->
+<pre class="r"><code>decTreeModel &lt;- rpart(cuisine ~ .,data=trainingSet, method = &quot;class&quot;)
+
+#Display the tree
+plot(decTreeModel, margin=0.1)
+text(decTreeModel)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Prune tree</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdGNwKGRlY1RyZWVNb2RlbClcbmBgYCJ9 -->
+<pre class="r"><code>plotcp(decTreeModel)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJ1bmVkX2RlY1RyZWVNb2RlbCA9IHBydW5lKGRlY1RyZWVNb2RlbCwgY3A9MC4wMTMpXG4jIERpc3BsYXkgcHJ1bmVkIHRyZWVcbnBsb3QocHJ1bmVkX2RlY1RyZWVNb2RlbCwgbWFyZ2luPTAuMSlcbnRleHQocHJ1bmVkX2RlY1RyZWVNb2RlbClcbmBgYCJ9 -->
+<pre class="r"><code>pruned_decTreeModel = prune(decTreeModel, cp=0.013)
+# Display pruned tree
+plot(pruned_decTreeModel, margin=0.1)
+text(pruned_decTreeModel)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="perform-prdictions-for-the-testing-set" class="section level1">
+<h1>Perform prdictions for the testing set</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdGVkTGFiZWxzPC1wcmVkaWN0KHBydW5lZF9kZWNUcmVlTW9kZWwsIHRlc3RpbmdTZXQsIHR5cGUgPSBcImNsYXNzXCIpXG4jIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIGluIHRoZSB0ZXN0IHNldFxuc2l6ZVRlc3RTZXQgPSBkaW0odGVzdGluZ1NldClbMV1cbiMgR2V0IHRoZSBudW1iZXIgb2YgZGF0YSBwb2ludHMgdGhhdCBhcmUgbWlzY2xhc3NpZmllZFxuZXJyb3IgPSBzdW0ocHJlZGljdGVkTGFiZWxzICE9IHRlc3RpbmdTZXQkY3Vpc2luZSlcbiMgQ2FsY3VsYXRlIHRoZSBtaXNjbGFzc2lmaWNhdGlvbiByYXRlXG5taXNjbGFzc2lmaWNhdGlvbl9yYXRlID0gZXJyb3Ivc2l6ZVRlc3RTZXRcbiMgRGlzcGxheSB0aGUgbWlzY2xhc3NpZmljYXRpb24gcmF0ZVxucHJpbnQoZXJyb3IpXG5wcmludChtaXNjbGFzc2lmaWNhdGlvbl9yYXRlKVxuYGBgIn0= -->
+<pre class="r"><code>predictedLabels&lt;-predict(pruned_decTreeModel, testingSet, type = &quot;class&quot;)
+# Get the number of data points in the test set
+sizeTestSet = dim(testingSet)[1]
+# Get the number of data points that are misclassified
+error = sum(predictedLabels != testingSet$cuisine)
+# Calculate the misclassification rate
+misclassification_rate = error/sizeTestSet
+# Display the misclassification rate
+print(error)
+print(misclassification_rate)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>%% EXPLORATORY TEXT CLUSTERING</p>
+<p>Install packages</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHJpbmdkaXN0KVxubGlicmFyeShSQ3VybClcbmBgYCJ9 -->
@@ -286,8 +414,9 @@ rect.hclust(hc,k=20)
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWRyaWFuIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpJbnN0YWxsIHBhY2thZ2VzCmBgYHtyfQojaW5zdGFsbC5wYWNrYWdlcygidGlkeXZlcnNlIikKI2luc3RhbGwucGFja2FnZXMoImpzb25saXRlIikKI2luc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikKI2RldnRvb2xzOjppbnN0YWxsX2dpdGh1YigiYnJvb2tlLXdhdHNvbi9CUlJSIikKYGBgCgoKTG9hZCBsaWJyYXJpZXMKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGpzb25saXRlKQpsaWJyYXJ5KEJSUlIpCmxpYnJhcnkodGlkeXIpCmBgYAoKCk1lc3NpbmcgYXJvdW5kIHdpdGggQlJSUgpgYGB7cn0KI3NrcnJyYWhoKCkKI2RlZmF1bHRTb3VuZHMgPC0gbGlzdCgxOjUyKQojY3VzdG9tU291bmRzIDwtIGxpc3QoImh0dHA6Ly93d3cubWlnb3Nzb3VuZGJvYXJkLmNvbS9hdWRpby90YWtlb2ZmUG93UG93LndhdiIsICJodHRwOi8vd3d3Lm1pZ29zc291bmRib2FyZC5jb20vYXVkaW8vcXVhdm9SYWh3LndhdiIsICJodHRwOi8vd3d3Lm1pZ29zc291bmRib2FyZC5jb20vYXVkaW8vdGFrZW9mZkNoaXJwLndhdiIpCiNzb3VuZHMgPC0gbGlzdChkZWZhdWx0U291bmRzLCBjdXN0b21Tb3VuZHMpCiNza3JycmFoaChzYW1wbGUoc291bmRzLDEpKQpgYGAKCgpJbXBvcnQgSlNPTiBkYXRhIHRvIGEgZGF0YXRhYmxlCmBgYHtyfQo8PDw8PDw8IEhFQUQKZGF0YSA8LSBmcm9tSlNPTigiZGF0YS90cmFpbi5qc29uIikKPT09PT09PQpkYXRhIDwtIGZyb21KU09OKCJ0cmFpbi5qc29uIikKPj4+Pj4+PiBmMWEwZjVjZjA5ZDkxZDZkMjZjODhkNGVkZDE4MThiNjA3YzI1ZWY0CmhlYWQoZGF0YSkKYGBgCgoKU3BsaXQgaW5ncmVkaWVudHMgY29sdW1uIGludG8gc2VwZXJhdGUgcm93cyB3aXRoIGR1cGxpY2F0ZWQgaWQgYW5kIGN1aXNpbmUgdmFsdWVzIChtYWtlIGRhdGEgbG9uZykKYGBge3J9CiN1c2luZyB0aGUgdW5uZXN0IGZ1bmN0aW9uIGZyb20gdGlkeXIgZG9lcyB0aGlzIHZlcnkgd2VsbApkYXRhTG9uZyA8LSB1bm5lc3QoZGF0YSwgaW5ncmVkaWVudHMpCmhlYWQoZGF0YUxvbmcpCmBgYAoKClNwcmVhZCBpbmdyZWRpZW50cyBhY3Jvc3MgY29sdW1ucyB0byBtYWtlIGR1bW15IHZhcmlhYmxlcyAobWFrZSBkYXRhIHdpZGUpCmBgYHtyfQpkYXRhVGlkeSA8LSBkYXRhTG9uZyAlPiUKICBtdXRhdGUoeWVzbm8gPSAxKSAlPiUKICBkaXN0aW5jdCAlPiUKICBzcHJlYWQoaW5ncmVkaWVudHMsIHllc25vLCBmaWxsID0gMCkKCmhlYWQoZGF0YVRpZHkpCmBgYAoKCkJlZ2luIHRvIGluc3BlY3QgdGhlIGRhdGEKYGBge3J9CmxldmVscyhhcy5mYWN0b3IoZGF0YVRpZHkkY3Vpc2luZSkpCmBgYAoKRXhwbG9yaW5nIHRleHQgY2x1c3RlcmluZwoKYGBge3J9CmxpYnJhcnkoc3RyaW5nZGlzdCkKbGlicmFyeShSQ3VybCkKYGBgCgoKYGBge3J9CmZvb2RTbWFsbCA8LSBkYXRhTG9uZ1sxOjUwLDNdCmhlYWQoZm9vZFNtYWxsKQpsZW5ndGgodW5pcXVlKGZvb2RTbWFsbCkpCmBgYAoKYGBge3J9CnVuaXF1ZVN1cmcgPC0gdW5pcXVlKGFzLmNoYXJhY3Rlcihmb29kU21hbGwpKQpkaXN0YW5jZVN1cmcgPC0gc3RyaW5nZGlzdG1hdHJpeCh1bmlxdWVTdXJnLHVuaXF1ZVN1cmcsbWV0aG9kID0gImp3IikKcm93bmFtZXMoZGlzdGFuY2VTdXJnKSA8LSB1bmlxdWVTdXJnCmhjIDwtIGhjbHVzdChhcy5kaXN0KGRpc3RhbmNlU3VyZykpCnBsb3QoaGMpCnJlY3QuaGNsdXN0KGhjLGs9MjApCgojZGZDbHVzdCA8LSBkYXRhLmZyYW1lKHVuaXF1ZVN1cmcsIGN1dHJlZShoYywgaz00MDApKQojbmFtZXMoZGZDbHVzdCkgPC0gYygnU3VyZ2VyeSBOYW1lJywnY2x1c3RlcicpCiNwbG90KHRhYmxlKGRmQ2x1c3QkY2x1c3RlcikpCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWRyaWFuIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgolJSBCQVNFIERBVEEgV1JBTkdMSU5HCgpMb2FkIGxpYnJhcmllcwpgYGB7cn0KbGlicmFyeSh0aWR5dmVyc2UpCmxpYnJhcnkoanNvbmxpdGUpCmBgYAoKSW1wb3J0IEpTT04gZGF0YSB0byBhIGRhdGF0YWJsZQpgYGB7cn0KZGF0YSA8LSBmcm9tSlNPTigidHJhaW4uanNvbiIpCmhlYWQoZGF0YSkKYGBgCgpDcmVhdGUgTE9ORyB2ZXJzaW9uIG9mIHRoZSBkYXRhIChzcGxpdCBpbmdyZWRpZW50cyBjb2x1bW4gaW50byBzZXBlcmF0ZSByb3dzIHdpdGggZHVwbGljYXRlZCBpZCBhbmQgY3Vpc2luZSB2YWx1ZXMpCmBgYHtyfQojdXNpbmcgdGhlIHVubmVzdCBmdW5jdGlvbiBmcm9tIHRpZHlyIGRvZXMgdGhpcyB2ZXJ5IHdlbGwKZGF0YUxvbmcgPC0gdW5uZXN0KGRhdGEsIGluZ3JlZGllbnRzKQpoZWFkKGRhdGFMb25nKQpgYGAKCkNyZWF0ZSBXSURFIHZlcnNpb24gb2YgZGF0YSAoc3ByZWFkIGluZ3JlZGllbnRzIGFjcm9zcyBjb2x1bW5zIHRvIG1ha2UgZHVtbXkgdmFyaWFibGVzKQpgYGB7cn0KZGF0YVRpZHkgPC0gZGF0YUxvbmcgJT4lCiAgbXV0YXRlKHllc25vID0gMSkgJT4lCiAgZGlzdGluY3QgJT4lCiAgc3ByZWFkKGluZ3JlZGllbnRzLCB5ZXNubywgZmlsbCA9IDApCgpoZWFkKGRhdGFUaWR5KQpgYGAKCiUlIEVYUExPUklORyBWQVJJQUJMRVMKCkV4cGxvcmUgaW5zdGFuY2VzIG9mIGVhY2ggY3Vpc2luZSB0eXBlCmBgYHtyfQpjdWlzaW5lQ291bnRzIDwtIGRhdGFUaWR5ICU+JQogIGdyb3VwX2J5KGN1aXNpbmUpICU+JQogIHRhbGx5CmBgYAoKUmVtb3ZlIGluZ3JlZGllbnRzIHdpdGggbGVzcyB0aGFuIFggb2NjdXJhbmNlcwpgYGB7cn0KaW5ncmVkaWVudENvdW50cyA8LSBkYXRhTG9uZyAlPiUgCiAgZ3JvdXBfYnkoaW5ncmVkaWVudHMpICU+JQogIHRhbGx5CgojZ2V0IGluZ3JlZGllbnRzID4gMTAgZnJlcXVlbmN5CmZyZXF1ZW50X2luZyA8LSBpbmdyZWRpZW50Q291bnRzICU+JSAKICBmaWx0ZXIobiA+PSAyKSAlPiUKICBzZWxlY3QoaW5ncmVkaWVudHMpCgojZmlsdGVyIG91dApkYXRhTG9uZ0ZpbHRlcmVkIDwtIGRhdGFMb25nICU+JSAKICBmaWx0ZXIoaW5ncmVkaWVudHMgJWluJSBmcmVxdWVudF9pbmckaW5ncmVkaWVudHMpCmBgYAoKUkUtU3ByZWFkIGluZ3JlZGllbnRzIGFjcm9zcyBjb2x1bW5zIHRvIG1ha2UgZHVtbXkgdmFyaWFibGVzIChtYWtlIGRhdGEgd2lkZSkKYGBge3J9CmRhdGFUaWR5RmlsdGVyZWQgPC0gZGF0YUxvbmdGaWx0ZXJlZCAlPiUKICBtdXRhdGUoeWVzbm8gPSAxKSAlPiUKICBkaXN0aW5jdCAlPiUKICBzcHJlYWQoaW5ncmVkaWVudHMsIHllc25vLCBmaWxsID0gMCkKCmhlYWQoZGF0YVRpZHlGaWx0ZXJlZCkKYGBgCgolIFBSRVBBUkUgREFUQSBGT1IgTU9ERUxJTkcKCkNyZWF0ZSBkYXRhc2V0IGZvciBkZWNpc2lvbiB0cmVlCmBgYHtyfQojY29weSBkYXRhc2V0CmRhdGFUcmVlIDwtIGRhdGFUaWR5RmlsdGVyZWQKI3JlbW92ZSB1c2VsZXNzIElEIGNvbHVtbgpkYXRhVHJlZSRpZCA8LSBOVUxMCiN0YWtlIGEgc21hbGxlciBzYW1wbGUgb2Ygb2JzZXJ2YXRpb25zIC0gMjAlCmRhdGFUcmVlIDwtIGRhdGFUcmVlICU+JSBzYW1wbGVfZnJhYygwLjEpCiNwcmV2aWV3IHRoZSBkYXRhCmhlYWQoZGF0YVRyZWUpCmBgYAoKQ3JlYXRlIHRlc3RpbmcgYW5kIHRyYWluaW5nIHNldHMgZnJvbSBkYXRhCmBgYHtyfQpudW1fc2FtcGxlcyA9IGRpbShkYXRhVHJlZSlbMV0Kc2FtcGxpbmcucmF0ZSA9IDAuOAp0cmFpbmluZyA8LSBzYW1wbGUoMTpudW1fc2FtcGxlcywgc2FtcGxpbmcucmF0ZSAqIG51bV9zYW1wbGVzLCByZXBsYWNlPUZBTFNFKSAKdHJhaW5pbmdTZXQgPC0gc3Vic2V0KGRhdGFUcmVlW3RyYWluaW5nLCBdKQp0ZXN0aW5nIDwtIHNldGRpZmYoMTpudW1fc2FtcGxlcyx0cmFpbmluZykKdGVzdGluZ1NldCA8LSBzdWJzZXQoZGF0YVRyZWVbdGVzdGluZywgXSkKYGBgCgoKJSUgS05OIE1PREVMCgpTdHJpcCBsYWJlbHMgZnJvbSB0aGUgZGF0YQpgYGB7cn0KIyBHZXQgdGhlIGZlYXR1cmVzIG9mIHRoZSB0cmFpbmluZyBzZXQKdHJhaW5pbmdmZWF0dXJlcyA8LSBzdWJzZXQodHJhaW5pbmdTZXQsIHNlbGVjdD1jKC1jdWlzaW5lKSkKIyBHZXQgdGhlIGxhYmVscyBvZiB0aGUgdHJhaW5pbmcgc2V0CnRyYWluaW5nbGFiZWxzIDwtIHRyYWluaW5nU2V0JGN1aXNpbmUKIyBHZXQgdGhlIGZlYXR1cmVzIG9mIHRoZSB0ZXN0aW5nIHNldAp0ZXN0aW5nZmVhdHVyZXMgPC0gc3Vic2V0KHRlc3RpbmdTZXQsIHNlbGVjdD1jKC1jdWlzaW5lKSkKYGBgCgpDcmVhdGUgbW9kZWwgYW5kIHByZWRpY3QKYGBge3J9CiMgTG9hZCB0aGUgY2xhc3NpZmljYXRpb24gbGlicmFyeQpsaWJyYXJ5KGNsYXNzKQojIGNhbGwgS05OIHdpdGggaz0zCnByZWRpY3RlZExhYmVscyA9IGtubih0cmFpbmluZ2ZlYXR1cmVzLHRlc3RpbmdmZWF0dXJlcyx0cmFpbmluZ2xhYmVscyxrPTMpCgojIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIGluIHRoZSB0ZXN0IHNldApzaXplVGVzdFNldCA9IGRpbSh0ZXN0aW5nU2V0KVsxXQojIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIHRoYXQgYXJlIG1pc2NsYXNzaWZpZWQKZXJyb3IgPSBzdW0ocHJlZGljdGVkTGFiZWxzICE9IHRlc3RpbmdTZXQkY3Vpc2luZSkKIyBDYWxjdWxhdGUgdGhlIG1pc2NsYXNzaWZpY2F0aW9uIHJhdGUKbWlzY2xhc3NpZmljYXRpb25fcmF0ZSA9IGVycm9yL3NpemVUZXN0U2V0CiMgRGlzcGxheSB0aGUgbWlzY2xhc3NpZmljYXRpb24gcmF0ZQpwcmludChtaXNjbGFzc2lmaWNhdGlvbl9yYXRlKQpgYGAKCgolJSBERUNJU0lPTiBUUkVFIE1PREVMCgoKTG9hZCBsaWJyYXJ5CmBgYHtyfQpsaWJyYXJ5KHJwYXJ0KQpgYGAKCkNyZWF0ZSBkZWNpc2lvbiB0cmVlIG1vZGVsIGFuZCBwcmV2aWV3CmBgYHtyfQpkZWNUcmVlTW9kZWwgPC0gcnBhcnQoY3Vpc2luZSB+IC4sZGF0YT10cmFpbmluZ1NldCwgbWV0aG9kID0gImNsYXNzIikKCiNEaXNwbGF5IHRoZSB0cmVlCnBsb3QoZGVjVHJlZU1vZGVsLCBtYXJnaW49MC4xKQp0ZXh0KGRlY1RyZWVNb2RlbCkKYGBgCgpQcnVuZSB0cmVlCmBgYHtyfQpwbG90Y3AoZGVjVHJlZU1vZGVsKQpgYGAKCgpgYGB7cn0KcHJ1bmVkX2RlY1RyZWVNb2RlbCA9IHBydW5lKGRlY1RyZWVNb2RlbCwgY3A9MC4wMTMpCiMgRGlzcGxheSBwcnVuZWQgdHJlZQpwbG90KHBydW5lZF9kZWNUcmVlTW9kZWwsIG1hcmdpbj0wLjEpCnRleHQocHJ1bmVkX2RlY1RyZWVNb2RlbCkKYGBgCgoKIyBQZXJmb3JtIHByZGljdGlvbnMgZm9yIHRoZSB0ZXN0aW5nIHNldApgYGB7cn0KcHJlZGljdGVkTGFiZWxzPC1wcmVkaWN0KHBydW5lZF9kZWNUcmVlTW9kZWwsIHRlc3RpbmdTZXQsIHR5cGUgPSAiY2xhc3MiKQojIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIGluIHRoZSB0ZXN0IHNldApzaXplVGVzdFNldCA9IGRpbSh0ZXN0aW5nU2V0KVsxXQojIEdldCB0aGUgbnVtYmVyIG9mIGRhdGEgcG9pbnRzIHRoYXQgYXJlIG1pc2NsYXNzaWZpZWQKZXJyb3IgPSBzdW0ocHJlZGljdGVkTGFiZWxzICE9IHRlc3RpbmdTZXQkY3Vpc2luZSkKIyBDYWxjdWxhdGUgdGhlIG1pc2NsYXNzaWZpY2F0aW9uIHJhdGUKbWlzY2xhc3NpZmljYXRpb25fcmF0ZSA9IGVycm9yL3NpemVUZXN0U2V0CiMgRGlzcGxheSB0aGUgbWlzY2xhc3NpZmljYXRpb24gcmF0ZQpwcmludChlcnJvcikKcHJpbnQobWlzY2xhc3NpZmljYXRpb25fcmF0ZSkKYGBgCgoKJSUgRVhQTE9SQVRPUlkgVEVYVCBDTFVTVEVSSU5HCgpJbnN0YWxsIHBhY2thZ2VzCmBgYHtyfQpsaWJyYXJ5KHN0cmluZ2Rpc3QpCmxpYnJhcnkoUkN1cmwpCmBgYAoKYGBge3J9CmZvb2RTbWFsbCA8LSBkYXRhTG9uZ1sxOjUwLDNdCmhlYWQoZm9vZFNtYWxsKQpsZW5ndGgodW5pcXVlKGZvb2RTbWFsbCkpCmBgYAoKYGBge3J9CnVuaXF1ZVN1cmcgPC0gdW5pcXVlKGFzLmNoYXJhY3Rlcihmb29kU21hbGwpKQpkaXN0YW5jZVN1cmcgPC0gc3RyaW5nZGlzdG1hdHJpeCh1bmlxdWVTdXJnLHVuaXF1ZVN1cmcsbWV0aG9kID0gImp3IikKcm93bmFtZXMoZGlzdGFuY2VTdXJnKSA8LSB1bmlxdWVTdXJnCmhjIDwtIGhjbHVzdChhcy5kaXN0KGRpc3RhbmNlU3VyZykpCnBsb3QoaGMpCnJlY3QuaGNsdXN0KGhjLGs9MjApCgojZGZDbHVzdCA8LSBkYXRhLmZyYW1lKHVuaXF1ZVN1cmcsIGN1dHJlZShoYywgaz00MDApKQojbmFtZXMoZGZDbHVzdCkgPC0gYygnU3VyZ2VyeSBOYW1lJywnY2x1c3RlcicpCiNwbG90KHRhYmxlKGRmQ2x1c3QkY2x1c3RlcikpCmBgYAoK</div>
 
 
 
