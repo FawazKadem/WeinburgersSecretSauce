@@ -1,8 +1,0 @@
----
-title: "Test1"
-author: "Lotan Weininger"
-date: "June 24, 2018"
-output: html_document
----
-
-Does this fucking shit work
