@@ -1,0 +1,44 @@
+---
+title: "Creating Master Dataset"
+author: "Lotan Weininger"
+date: "July 3, 2018"
+output: html_document
+---
+
+#### This is an exact replica of adrians code with the last line added. Didnt want to add it onto adrians file
+
+%% BASE DATA WRANGLING
+
+Load libraries
+```{r}
+library(tidyverse)
+library(jsonlite)
+```
+
+Import JSON data to a datatable
+```{r}
+data <- fromJSON("train.json")
+head(data)
+```
+
+Create LONG version of the data (split ingredients column into seperate rows with duplicated id and cuisine values)
+```{r}
+#using the unnest function from tidyr does this very well
+dataLong <- unnest(data, ingredients)
+head(dataLong)
+```
+
+Create WIDE version of data (spread ingredients across columns to make dummy variables)
+```{r}
+dataTidy <- dataLong %>%
+  mutate(yesno = 1) %>%
+  distinct %>%
+  spread(ingredients, yesno, fill = 0)
+
+head(dataTidy)
+```
+
+```{r}
+write.csv(dataTidy, file = "cookingDataMaster.csv", row.names = FALSE)
+```
+
