@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+%% PREPARE DATA FOR MODELING
+
+Create dataset for decision tree
+```{r}
+#copy dataset
+dataReady <- dataTidyFiltered
+
+#remove useless ID column
+dataReady$id <- NULL
+
+#take a smaller sample of observations 
+#LEVER: change to 1 to keep a full sample
+dataReady <- dataReady %>% sample_frac(1)
+
+#preview the data
+head(dataReady)
+```
+
+
+% DECISION TREE MODEL WITH K-FOLD VALIDATION
+
+Load library for decision trees
+```{r}
+library(rpart)
+```
+
+```{r}
+#number of instances we will average in our K-Fold Cross Validation
+fVar <- 5
+
+#create a list to store all of the errors we will average in the K-Fold Cross Validation
+errorStorage <- vector(mode = "list", length = fVar)
+
+for (fold in 1:fVar){
+  
+  # Create Training and Testing Sets
+  num_samples = dim(dataReady)[1]
+  sampling.rate = 0.8
+  training <- sample(1:num_samples, sampling.rate * num_samples, replace=FALSE)
+  trainingSet <- dataReady[training, ]
+  testing <- setdiff(1:num_samples,training)
+  testingSet <- dataReady[testing, ]
+
+  #create model and predictions
+  decTreeModel <- rpart(cuisine ~ .,data=trainingSet, method = "class")
+  predictedLabels<-predict(decTreeModel, testingSet, type = "class")
+  
+  # Determine accuracy
+  sizeTestSet = dim(testingSet)[1]
+  error = sum(predictedLabels != testingSet$cuisine)
+  misclassification_rate = error/sizeTestSet
+
+  # Print some stuff
+  print(fold)
+  print(error)
+  print(misclassification_rate)
+  errorStorage[fold] <- misclassification_rate
+}
+
+#Print the average misclassification rate
+print(mean(unlist(errorStorage)))
+```
+
+
+%% TREE PRUNING AND OTHER STUFF I DIDNT DO..
+
+Plot tree
+```{r}
+#Display the tree
+plot(decTreeModel, margin=0.1)
+text(decTreeModel)
+```
+
+Plot complexity of the decision tree
+```{r}
+plotcp(decTreeModel)
+```
+
+Prune decision tree at appropriate place and re-plot
+```{r}
+pruned_decTreeModel = prune(decTreeModel, cp=0.016)
+
+# Display pruned tree
+plot(pruned_decTreeModel, margin=0.1)
+text(pruned_decTreeModel)
+```
+
+
+
+
+

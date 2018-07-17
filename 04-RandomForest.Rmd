@@ -1,0 +1,168 @@
+---
+title: "Adrian"
+output: html_notebook
+---
+
+CURRENT PROGRESS:
+
+- Simplified model to just a classification between French and Chinese food (those were chosen because they have almost the same number of observations - at 2.5k each)
+- Decision tree model, without removing ANY ingredients with low counts, was able to achieve 8% misclassifcation
+- Brief testing with KNN was able to achieve 12% misclassification at its lowest (however, not much k-fold testing was done...)
+
+
+TODO:
+
+- Explore false positives and false negatives with decision tree.
+- K-fold testing by removing ingredients with low counts. Removing them seems to make the decision tree worse but has an interesting impact on the KNN. Above 3 gradually worsens accuracy, below 3 drastically worsens accuracy. Need to find optimal point.
+- K-fold testing with K for KNN.
+- Experiment with classifying different cuisine types, so far just trying to classify between French and Chinese (both have around 2.5K observations) has gone well, with a decision tree reaching 8% misclassification. Need to explore normalizing the number of observations of cuisine types...when adding in Italian (6.5k samples) into the decision tree, results got much worse. This might be explained by the ratio of observations to variables, however, more testing needs to be done to be sure.
+
+
+%% BASE DATA WRANGLING
+
+Load libraries
+```{r}
+library(tidyverse)
+library(jsonlite)
+```
+
+Import from JSON to data table
+```{r}
+data <- fromJSON("data/train.json")
+head(data)
+```
+
+Filter out cuisine types
+```{r}
+#filter out cuisine types
+#LEVER: comment this out to include everything
+data <- data %>% 
+  filter(cuisine == "french" | cuisine == "chinese")
+
+head(data)
+```
+
+Create LONG version of the data (split ingredients column into seperate rows with duplicated id and cuisine values)
+```{r}
+#using the unnest function from tidyr does this very well
+dataLong <- unnest(data, ingredients)
+head(dataLong)
+```
+
+Create WIDE version of data (spread ingredients across columns to make dummy variables)
+```{r}
+dataTidy <- dataLong %>%
+  mutate(yesno = 1) %>%
+  distinct %>%
+  spread(ingredients, yesno, fill = 0)
+
+head(dataTidy)
+```
+
+
+%% EXPLORING VARIABLES
+
+Explore instances of each cuisine type
+```{r}
+cuisineCounts <- dataTidy %>%
+  group_by(cuisine) %>%
+  tally
+```
+
+Remove ingredients with less than X occurances
+```{r}
+ingredientCounts <- dataLong %>% 
+  group_by(ingredients) %>%
+  tally
+
+#get ingredients > X frequency
+#LEVER: Change to 0 to keep entire dataset - not removing anything increases the accuracy of decision tree
+frequent_ing <- ingredientCounts %>% 
+  filter(n >= 0) %>%
+  select(ingredients)
+
+#filter out
+dataLongFiltered <- dataLong %>% 
+  filter(ingredients %in% frequent_ing$ingredients)
+```
+
+RE-Spread ingredients across columns to make dummy variables (make data wide)
+```{r}
+dataTidyFiltered <- dataLongFiltered %>%
+  mutate(yesno = 1) %>%
+  distinct %>%
+  spread(ingredients, yesno, fill = 0)
+
+head(dataTidyFiltered)
+```
+
+
+%% PREPARE DATA FOR MODELING
+
+Create dataset for decision tree
+```{r}
+#copy dataset
+dataReady <- dataTidy
+
+#remove useless ID column
+dataReady$id <- NULL
+
+#take a smaller sample of observations 
+#LEVER: change to 1 to keep a full sample
+dataReady <- dataReady %>% sample_frac(1)
+
+#preview the data
+head(dataReady)
+```
+
+Create testing and training sets from data
+```{r}
+num_samples = dim(dataReady)[1]
+sampling.rate = 0.8
+training <- sample(1:num_samples, sampling.rate * num_samples, replace=FALSE) 
+trainingSet <- subset(dataReady[training, ])
+testing <- setdiff(1:num_samples,training)
+testingSet <- subset(dataReady[testing, ])
+```
+
+
+%% RANDOM FOREST MODEL
+
+Load library
+```{r}
+library(randomForest)
+```
+
+Create Random Forest Model and Plot
+```{r}
+#create model
+RandForestModel <- randomForest(cuisine ~ ., data = trainingSet)
+
+#Plot the Error (MSE) as a function of the number of trees
+plot(RandForestModel)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

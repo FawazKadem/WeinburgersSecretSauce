@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+%% EXPLORATORY TEXT CLUSTERING
+
+Install packages
+```{r}
+library(stringdist)
+library(RCurl)
+```
+
+```{r}
+foodSmall <- dataLong[1:50,3]
+head(foodSmall)
+length(unique(foodSmall))
+```
+
+```{r}
+uniqueSurg <- unique(as.character(foodSmall))
+distanceSurg <- stringdistmatrix(uniqueSurg,uniqueSurg,method = "jw")
+rownames(distanceSurg) <- uniqueSurg
+hc <- hclust(as.dist(distanceSurg))
+plot(hc)
+rect.hclust(hc,k=20)
+
+#dfClust <- data.frame(uniqueSurg, cutree(hc, k=400))
+#names(dfClust) <- c('Surgery Name','cluster')
+#plot(table(dfClust$cluster))
+```
+
+

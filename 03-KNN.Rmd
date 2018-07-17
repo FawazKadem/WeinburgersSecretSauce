@@ -1,0 +1,143 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+%% PREPARE DATA FOR MODELING
+
+Remove ingredients with less than X occurances
+```{r}
+ingredientCounts <- dataLong %>% 
+  group_by(ingredients) %>%
+  tally
+
+#get ingredients > X frequency
+#LEVER: Change to 0 to keep entire dataset - not removing anything increases the accuracy of decision tree
+frequent_ing <- ingredientCounts %>% 
+  filter(n >= 5) %>%
+  select(ingredients)
+
+#filter out
+dataLongFiltered <- dataLong %>% 
+  filter(ingredients %in% frequent_ing$ingredients)
+
+rm(ingredientCounts, frequent_ing)
+```
+
+RE-Spread ingredients across columns to make dummy variables (make data wide)
+```{r}
+dataTidyFiltered <- dataLongFiltered %>%
+  mutate(yesno = 1) %>%
+  distinct %>%
+  spread(ingredients, yesno, fill = 0)
+
+head(dataTidyFiltered)
+```
+
+Create dataset for decision tree
+```{r}
+#copy dataset
+dataReady <- dataTidyFiltered
+
+#remove useless ID column
+dataReady$id <- NULL
+
+#take a smaller sample of observations 
+#LEVER: change to 1 to keep a full sample
+dataReady <- dataReady %>% sample_frac(0.5)
+
+#preview the data
+head(dataReady)
+```
+
+
+%% KNN MODEL
+
+```{r}
+library(class)
+#number of k values to test
+kVar <- 1
+#number of instances we will average in our K-Fold Cross Validation
+fVar <- 2
+#create a list to store all of our knn models
+knnModelList <- vector(mode = "list", length = kVar)
+#create a list to store all of our knn models
+knnModelScores <- vector(mode = "list", length = kVar)
+#create a list to store all of the errors we will average in the K-Fold Cross Validation
+errorStorage <- vector(mode = "list", length = fVar)
+#create 1 to kVar number of models
+for (i in 1:kVar){
+    
+    #test each one fVar number of times
+    
+    for (fold in 1:fVar){
+      
+      # Create Training and Testing Sets
+      num_samples = dim(dataReady)[1]
+      sampling.rate = 0.8
+      training <- sample(1:num_samples, sampling.rate * num_samples, replace=FALSE)
+      trainingSet <- dataReady[training, ]
+      testing <- setdiff(1:num_samples,training)
+      testingSet <- dataReady[testing, ]
+      
+      #seperate features from labels
+      trainingfeatures <- subset(trainingSet, select=c(-cuisine))
+      traininglabels <- trainingSet$cuisine
+      testingfeatures <- subset(testingSet, select=c(-cuisine))
+      #testingLabels <- testingSet$cuisine
+      
+      #create model
+      predictions <- knn(trainingfeatures, testingfeatures, traininglabels, k=i)
+      sizeTestSet = dim(testingSet)[1]
+      
+      # Get the number of data points that are misclassified
+      error = sum(predictions != testingSet$cuisine)
+      # Calculate the misclassification rate
+      misclassification_rate = error/sizeTestSet
+      errorStorage[fold] <- misclassification_rate
+    }
+  
+  #store of the average of the K-Fold Cross Validation for a specific k value in a given list
+  knnModelScores[[i]] <- mean(unlist(errorStorage))
+  
+  #print the value
+  print(i)
+  print(knnModelScores[[i]])
+    
+}
+```
+
+
+%% OLD KNN
+
+
+
+
+Strip labels from the data
+```{r}
+# Get the features of the training set
+trainingfeatures <- subset(trainingSet, select=c(-cuisine))
+# Get the labels of the training set
+traininglabels <- trainingSet$cuisine
+# Get the features of the testing set
+testingfeatures <- subset(testingSet, select=c(-cuisine))
+```
+
+Create model and predict
+```{r}
+# Load the classification library
+library(class)
+# call KNN with k=3
+predictedLabels = knn(trainingfeatures,testingfeatures,traininglabels,k=3)
+
+# Get the number of data points in the test set
+sizeTestSet = dim(testingSet)[1]
+# Get the number of data points that are misclassified
+error = sum(predictedLabels != testingSet$cuisine)
+# Calculate the misclassification rate
+misclassification_rate = error/sizeTestSet
+# Display the misclassification rate
+print(misclassification_rate)
+```
+
+
